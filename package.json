@@ -1,0 +1,27 @@
+{
+  "name": "etherscan-mock-api",
+  "version": "1.0.0",
+  "description": "A mock API for etherscan.io to simulate actual calls against testrpc",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "ethereum",
+    "etherscan",
+    "testrpc",
+    "ganache",
+    "truffle"
+  ],
+  "author": "Joel Martínez @j0x0j",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "restify": "^7.1.1",
+    "restify-cors-middleware": "^1.1.0",
+    "web3": "^1.0.0-beta.34"
+  },
+  "devDependencies": {
+    "mocha": "^5.1.1",
+    "standard": "^11.0.1"
+  }
+}
