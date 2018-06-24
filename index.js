@@ -1,3 +1,7 @@
+if (!process.env.PROVIDER) {
+  throw new Error('Needs a PROVIDER environment variable')
+}
+
 const restify = require('restify')
 const Web3 = require('web3')
 const corsMiddleware = require('restify-cors-middleware')
@@ -7,7 +11,7 @@ function serializeLogs (data) {
   const result = {
     status: '1',
     message: 'OK',
-    result: [...data]
+    result: [ ...data ]
   }
   return result
 }
@@ -26,6 +30,7 @@ async function getWeb3Method (options) {
   let data
   switch (options.action) {
     case 'eth_getTransactionReceipt':
+      console.log('<<MARK (eth_getTransactionReceipt)>>', options)
       try {
         data = await web3.eth.getTransactionReceipt(options.txhash)
         payload = serializeTransactionReceipt(data)
@@ -34,6 +39,7 @@ async function getWeb3Method (options) {
       }
       break
     case 'getLogs':
+      console.log('<<MARK (getLogs)>>', options)
       const { fromBlock, toBlock, address } = options
       try {
         data = await web3.eth.getPastLogs({
@@ -49,6 +55,7 @@ async function getWeb3Method (options) {
     default:
       payload = {}
   }
+  console.log('<<MARK (payload)>>', payload)
   return payload
 }
 
@@ -64,6 +71,8 @@ async function handleGetAPI (req, res, next) {
 }
 
 const server = restify.createServer()
+
+server.server.setTimeout(60000 * 5)
 
 const cors = corsMiddleware({
   origins: ['*'],
