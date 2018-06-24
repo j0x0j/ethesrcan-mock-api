@@ -30,7 +30,6 @@ async function getWeb3Method (options) {
   let data
   switch (options.action) {
     case 'eth_getTransactionReceipt':
-      console.log('<<MARK (eth_getTransactionReceipt)>>', options)
       try {
         data = await web3.eth.getTransactionReceipt(options.txhash)
         payload = serializeTransactionReceipt(data)
@@ -39,7 +38,6 @@ async function getWeb3Method (options) {
       }
       break
     case 'getLogs':
-      console.log('<<MARK (getLogs)>>', options)
       const { fromBlock, toBlock, address } = options
       try {
         data = await web3.eth.getPastLogs({
@@ -55,7 +53,6 @@ async function getWeb3Method (options) {
     default:
       payload = {}
   }
-  console.log('<<MARK (payload)>>', payload)
   return payload
 }
 
